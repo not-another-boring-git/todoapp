@@ -12,12 +12,13 @@ defmodule TodoappWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    live "/tasks", TaskLive
   end
 
   scope "/", TodoappWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", TaskLive
   end
 
   # Other scopes may use custom stacks.
