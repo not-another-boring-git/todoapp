@@ -3,6 +3,7 @@ defmodule TodoappWeb.TaskListControllerTest do
 
   import Todoapp.TasksFixtures
   alias Todoapp.Tasks.Tasks.TaskList
+  alias Todoapp.Tasks.Tasks.Task
 
   @create_attrs %{
     name: "some name"
@@ -45,15 +46,22 @@ defmodule TodoappWeb.TaskListControllerTest do
   describe "update task_list" do
     setup [:create_task_list]
 
-    test "renders task_list when data is valid", %{conn: conn, task_list: %TaskList{id: id} = task_list} do
+    test "renders task_list when data is valid", %{
+      conn: conn,
+      task_list: %TaskList{id: id} = task_list
+    } do
       conn = put(conn, ~p"/api/tasklists/#{task_list}", task_list: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, ~p"/api/tasklists/#{id}")
+      task = %Task{name: "teste"}
 
       assert %{
                "id" => ^id,
-               "name" => "some updated name"
+               "name" => "some updated name",
+               "tasks" => [
+                 task
+               ]
              } = json_response(conn, 200)["data"]
     end
 
