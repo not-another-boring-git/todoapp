@@ -32,4 +32,18 @@ defmodule Todoapp.TasksFixtures do
 
     task
   end
+
+  @doc """
+  Generate a task_group.
+  """
+  def task_group_fixture(attrs \\ %{}) do
+    {:ok, task_group} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> Todoapp.Tasks.create_task_group()
+
+    task_group
+  end
 end

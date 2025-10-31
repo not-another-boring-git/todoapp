@@ -112,4 +112,58 @@ defmodule Todoapp.TasksTest do
       assert %Ecto.Changeset{} = Tasks.change_task(task)
     end
   end
+
+  describe "task_groups" do
+    alias Todoapp.Tasks.TaskGroup
+
+    import Todoapp.TasksFixtures
+
+    @invalid_attrs %{name: nil}
+
+    test "list_task_groups/0 returns all task_groups" do
+      task_group = task_group_fixture()
+      assert Tasks.list_task_groups() == [task_group]
+    end
+
+    test "get_task_group!/1 returns the task_group with given id" do
+      task_group = task_group_fixture()
+      assert Tasks.get_task_group!(task_group.id) == task_group
+    end
+
+    test "create_task_group/1 with valid data creates a task_group" do
+      valid_attrs = %{name: "some name"}
+
+      assert {:ok, %TaskGroup{} = task_group} = Tasks.create_task_group(valid_attrs)
+      assert task_group.name == "some name"
+    end
+
+    test "create_task_group/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Tasks.create_task_group(@invalid_attrs)
+    end
+
+    test "update_task_group/2 with valid data updates the task_group" do
+      task_group = task_group_fixture()
+      update_attrs = %{name: "some updated name"}
+
+      assert {:ok, %TaskGroup{} = task_group} = Tasks.update_task_group(task_group, update_attrs)
+      assert task_group.name == "some updated name"
+    end
+
+    test "update_task_group/2 with invalid data returns error changeset" do
+      task_group = task_group_fixture()
+      assert {:error, %Ecto.Changeset{}} = Tasks.update_task_group(task_group, @invalid_attrs)
+      assert task_group == Tasks.get_task_group!(task_group.id)
+    end
+
+    test "delete_task_group/1 deletes the task_group" do
+      task_group = task_group_fixture()
+      assert {:ok, %TaskGroup{}} = Tasks.delete_task_group(task_group)
+      assert_raise Ecto.NoResultsError, fn -> Tasks.get_task_group!(task_group.id) end
+    end
+
+    test "change_task_group/1 returns a task_group changeset" do
+      task_group = task_group_fixture()
+      assert %Ecto.Changeset{} = Tasks.change_task_group(task_group)
+    end
+  end
 end
