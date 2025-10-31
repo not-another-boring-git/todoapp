@@ -18,7 +18,8 @@ defmodule TodoappWeb.TaskListJSON do
   defp data(%TaskList{} = task_list) do
     %{
       id: task_list.id,
-      name: task_list.name
+      name: task_list.name,
+      tasks: for(task <- Map.get(task_list, :tasks, []), do: %{id: task.id, name: task.name})
     }
   end
 end

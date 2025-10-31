@@ -4,7 +4,7 @@ defmodule Todoapp.Tasks.Tasks.TaskList do
 
   schema "tasklists" do
     field :name, :string
-
+    has_many :tasks, Todoapp.Tasks.Tasks.Task, foreign_key: :tasklist_id
     timestamps(type: :utc_datetime)
   end
 

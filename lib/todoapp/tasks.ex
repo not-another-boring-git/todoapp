@@ -35,7 +35,10 @@ defmodule Todoapp.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task_list!(id), do: Repo.get!(TaskList, id)
+  def get_task_list!(id) do
+    tasklist = Repo.get!(TaskList, id)
+    Map.put(tasklist, :tasks, Repo.preload(tasklist, :tasks).tasks)
+  end
 
   @doc """
   Creates a task_list.
