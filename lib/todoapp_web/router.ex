@@ -21,6 +21,11 @@ defmodule TodoappWeb.Router do
     live "/", TaskLive
   end
 
+  scope "/api", TodoappWeb do
+    pipe_through :api
+    resources "/tasklists", TaskListController, except: [:new, :edit]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", TodoappWeb do
   #   pipe_through :api
