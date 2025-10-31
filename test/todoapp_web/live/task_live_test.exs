@@ -1,12 +1,3 @@
-<file_path>
-todoapp/test/todoapp_web/live/task_live_test.exs
-</file_path>
-
-<edit_description>
-Create a test for TaskLive rendering
-</edit_description>
-
-```
 defmodule TodoappWeb.TaskLiveTest do
   use TodoappWeb.ConnCase, async: true
 

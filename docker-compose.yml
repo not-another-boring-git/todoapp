@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:14-alpine
+    image: postgres:16-alpine
     privileged: true
     ports:
       - 5432:5432
@@ -19,21 +19,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    ports:
-      - 4000:4000
+    # ports:
+    #   - 4000:4000
     volumes:
       - ./priv/repo/migrations:/app/priv/repo/migrations
       - ./lib:/app/lib
       - ./_docker_build:/code/_build
     container_name: todoapp-api
-    hostname: todoapp-api
+    # hostname: todoapp-api
+    network_mode: host
     environment:
       MIX_ENV: dev
       DATABASE_HOSTNAME: todoapp-db
-    networks:
-      - network2
-    # depends_on:
-    # - db
+    # networks:
+    #   - network2
+    depends_on:
+      - db
 
 volumes:
   postgresql_data:
